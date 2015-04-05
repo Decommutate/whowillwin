@@ -1,0 +1,6 @@
+Note: Git may insist that .apikey has changed despite it being in the .gitignore file once a
+developer key has been added. If it does, run the command
+
+   > git update-index --assume-unchanged .apikey
+
+in order to force git to ignore the file.
