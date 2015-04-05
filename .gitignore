@@ -25,3 +25,6 @@ node_modules
 
 # Ignore IntelliJ files
 .idea
+
+#Ignore updates to .apikey to developers can insert their dev key
+.apikey
