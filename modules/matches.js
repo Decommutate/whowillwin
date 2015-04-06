@@ -28,6 +28,7 @@ var retrieveMatches = function() {
             cachedMatches = JSON.parse(fullBody);
         });
     }).on("error", function(error) {
+        console.log("An error has occurred getting recent matches");
         console.log(error);
     }).end();
 };
