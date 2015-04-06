@@ -5,7 +5,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: "Who will win?", timeline: match.getRecentMatch() });
+  res.render('index', { title: "Who will win?", timeline: JSON.stringify(match.getRecentMatch()) });
 });
 
 module.exports = router;

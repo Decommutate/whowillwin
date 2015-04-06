@@ -9,6 +9,7 @@ var filterFrame = function(frame) {
             var event = frame.events[i];
             if (event.eventType === "CHAMPION_KILL") {
                 var kill = {};
+                kill.position = event.position;
                 kill.eventType = event.eventType;
                 kill.timestamp = event.timestamp;
                 kill.victimId = event.victimId;
