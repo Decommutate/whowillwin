@@ -2,6 +2,7 @@ var https = require('https');
 var querystring = require('querystring');
 var apikey = require('../modules/apikey');
 var matches = require('../modules/matches');
+var matchFilter = require('../modules/matchFilter');
 
 var cachedMatch = null;
 
@@ -27,8 +28,7 @@ var refreshMatch = function() {
             res.on("data", function(chunk) {
                 fullBody += chunk;
             }).on("end", function() {
-                console.log("Recent match: " + fullBody);
-                cachedMatch = JSON.parse(fullBody);
+                cachedMatch = matchFilter.filterMatch(JSON.parse(fullBody));
             });
         }).on("error", function(error) {
             console.log("An error has occurred getting a recent match");
@@ -45,4 +45,4 @@ var getRecentMatch = function() {
     return cachedMatch;
 };
 
-module.exports.getRecentMatches = getRecentMatch;
+module.exports.getRecentMatch = getRecentMatch;
