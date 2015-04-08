@@ -14,6 +14,9 @@ router.get('/', function(req, res) {
       timeline: JSON.stringify(recentMatch.timeline)
     });
   }
+  else {
+    res.render('index', { title: "No match is available, please try again"});
+  }
 });
 
 module.exports = router;
