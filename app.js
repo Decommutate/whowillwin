@@ -1,3 +1,4 @@
+var hbs = require('hbs');
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -13,6 +14,14 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
+hbs.registerHelper('isBlueTeam', function(teamId, block) {
+  return teamId === 100 ? block.fn(this) : "";
+});
+
+hbs.registerHelper('isPurpleTeam', function(teamId, block) {
+  return teamId === 200 ? block.fn(this) : "";
+});
 
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));

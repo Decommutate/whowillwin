@@ -24,8 +24,8 @@ var retrieveMatches = function() {
         res.on("data", function(chunk) {
             fullBody += chunk;
         }).on("end", function() {
-            console.log("ending: " + fullBody);
             cachedMatches = JSON.parse(fullBody);
+            console.log(cachedMatches.length + " matches retrieved");
         });
     }).on("error", function(error) {
         console.log("An error has occurred getting recent matches");

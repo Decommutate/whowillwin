@@ -3,6 +3,7 @@ var querystring = require('querystring');
 var apikey = require('../modules/apikey');
 var matches = require('../modules/matches');
 var matchFilter = require('../modules/matchFilter');
+var svm = require('../modules/svm');
 
 var cachedMatch = null;
 
@@ -10,7 +11,7 @@ var refreshMatch = function() {
     var recentMatches = matches.getRecentMatches();
 
     console.log("Getting new match");
-    if (matches !== null) {
+    if (recentMatches && recentMatches.length > 0) {
         var matchId = recentMatches.shift();
 
         var parameters = {
@@ -28,7 +29,13 @@ var refreshMatch = function() {
             res.on("data", function(chunk) {
                 fullBody += chunk;
             }).on("end", function() {
-                cachedMatch = matchFilter.filterMatch(JSON.parse(fullBody));
+                try {
+                    cachedMatch = matchFilter.filterMatch(JSON.parse(fullBody));
+                    svm.addEntry(cachedMatch);
+                }
+                catch(ex) {
+                    console.log("Could not parse JSON: " + fullBody);
+                }
             });
         }).on("error", function(error) {
             console.log("An error has occurred getting a recent match");
@@ -36,6 +43,8 @@ var refreshMatch = function() {
         }).end();
 
         console.log("Now serving match id: " + matchId);
+    } else {
+        console.log("Could not get new match: no matches available");
     }
 };
 

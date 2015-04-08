@@ -1,0 +1,28 @@
+#blueTeam {
+    float: left;
+}
+
+.championlist {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.championList li {
+    padding: 0;
+    margin: 0;
+}
+
+.championImage {
+    height: 100px;
+    width: 100px;
+}
+
+#purpleTeam {
+    list-style-type: none;
+    float: left;;
+}
+
+#map {
+    float: left;
+}

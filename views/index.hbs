@@ -2,4 +2,25 @@
 <p>Welcome to {{title}}</p>
 <input type='hidden' id='timeline' value='{{{timeline}}}'/>
 
+<div id="blueTeam">
+<ul class="championlist">
+    {{#participants}}
+        {{#isBlueTeam teamId}}
+            <li><img class="championImage" src="{{championImage}}"
+                     title="{{championName}}"/></li>
+        {{/isBlueTeam}}
+    {{/participants}}
+</ul>
+</div>
 <div id="map"></div>
+<div id="purpleTeam">
+<ul class="championlist">
+    {{#participants}}
+        {{#isPurpleTeam teamId}}
+            <li><img class="championImage" src="{{championImage}}"
+                     title="{{championName}}"/></li>
+        {{/isPurpleTeam}}
+    {{/participants}}
+</ul>
+</div>
+<button id="startButton">Start</button>
