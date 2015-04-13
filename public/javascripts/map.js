@@ -1,15 +1,37 @@
+var SQAURE_SIZE = 10;
+var CIRCLE_RADIUS = 5;
+
 var svg, xScale, yScale;
 var timeline, data, currentTime = 0;
 var frameIndex = 0, eventIndex = 0;
 var killPlotInterval;
+var blueColor;
+var purpleColor;
 
 $(document).ready(function() {
     if ($("#timeline").val() === null) {
-        $("#map").append("No map data available. Please wait a few seconds and refresh the page");
+        $("#map").append("No map data available. " +
+            "Please wait a few seconds and refresh the page");
     } else {
-        $("#startButton").click(startMapTimer);
+        $("#blueButton").click(function() {
+            $("#purpleButton").animate({ opacity: 0}).unbind();
+            startMapTimer();
+        });
+        $("#purpleButton").click(function() {
+            $("#blueButton").animate({ opacity: 0}).unbind();
+            startMapTimer();
+        });
         generateMap();
     }
+
+    blueColor = d3.rgb(0, 0, 204);
+    purpleColor = d3.rgb(75, 0, 130);
+
+    //$("#timer").knob({
+    //    'min' : 0,
+    //    'max' : 123
+    //
+    //})
 });
 
 var hasStarted = false;
@@ -25,7 +47,6 @@ function startMapTimer() {
 }
 
 function passTime() {
-    var dataToPlot = [];
     currentTime += 10000;
 
     for (; frameIndex < timeline.frames.length; frameIndex++) {
@@ -33,9 +54,14 @@ function passTime() {
         for (; eventIndex < frame.events.length; eventIndex++) {
             var event = frame.events[eventIndex];
             if (event.timestamp <= currentTime) {
-                dataToPlot.push([parseInt(event.position.x), parseInt(event.position.y)]);
+                var point = [[parseInt(event.position.x), parseInt(event.position.y)]];
+
+                if (event.victimTeamId === 100 || event.teamId === 100) {
+                    plotKills(point, blueColor, event.eventType);
+                } else {
+                    plotKills(point, purpleColor, event.eventType);
+                }
             } else {
-                plotKills(dataToPlot);
                 return;
             }
         }
@@ -77,14 +103,27 @@ function generateMap() {
         .attr('height', height);
 }
 
-function plotKills(data) {
+function plotKills(data, color, eventType) {
     if (svg && xScale && yScale) {
-        svg.append('svg:g').selectAll("circle")
-            .data(data)
-            .enter().append("svg:circle")
-            .attr('cx', function(d) { return xScale(d[0]) })
-            .attr('cy', function(d) { return yScale(d[1]) })
-            .attr('r', 5)
-            .attr('class', 'kills');
+        if (eventType === "CHAMPION_KILL") {
+            svg.append('svg:g').selectAll('circle')
+                .data(data)
+                .enter().append('svg:circle')
+                    .attr('cx', function (d) { return xScale(d[0]) })
+                    .attr('cy', function (d) { return yScale(d[1]) })
+                    .attr('fill', function () { return color; })
+                    .attr('r', CIRCLE_RADIUS)
+                    .attr('class', 'kills');
+        } else {
+            svg.append('svg:g').selectAll('circle')
+                .data(data)
+                .enter().append('rect')
+                    .attr('x', function (d) { return xScale(d[0]) })
+                    .attr('y', function (d) { return yScale(d[1]) })
+                    .attr('fill', function () { return color; })
+                    .attr('width', SQAURE_SIZE)
+                    .attr('height', SQAURE_SIZE)
+                    .attr('class', 'kills');
+        }
     }
 }

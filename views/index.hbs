@@ -1,26 +1,36 @@
 <h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
 <input type='hidden' id='timeline' value='{{{timeline}}}'/>
 
-<div id="blueTeam">
-<ul class="championlist">
-    {{#participants}}
-        {{#isBlueTeam teamId}}
-            <li><img class="championImage" src="{{championImage}}"
-                     title="{{championName}}"/></li>
-        {{/isBlueTeam}}
-    {{/participants}}
-</ul>
+<div id="timer"/>
+<div id="mapArea">
+    <div id="blueTeam">
+        <ul class="championlist">
+            {{#participants}}
+                {{#isBlueTeam teamId}}
+                    <li><img class="championImage" src="{{championImage}}"
+                             title="{{championName}}"/></li>
+                {{/isBlueTeam}}
+            {{/participants}}
+        </ul>
+    </div>
+    <div id="map"></div>
+    <div id="purpleTeam">
+        <ul class="championlist">
+            {{#participants}}
+                {{#isPurpleTeam teamId}}
+                    <li><img class="championImage" src="{{championImage}}"
+                             title="{{championName}}"/></li>
+                {{/isPurpleTeam}}
+            {{/participants}}
+        </ul>
+    </div>
 </div>
-<div id="map"></div>
-<div id="purpleTeam">
-<ul class="championlist">
-    {{#participants}}
-        {{#isPurpleTeam teamId}}
-            <li><img class="championImage" src="{{championImage}}"
-                     title="{{championName}}"/></li>
-        {{/isPurpleTeam}}
-    {{/participants}}
-</ul>
+<br/>
+<div id="guessArea">
+    <a id="blueButton">Blue</a>
+    <a id="purpleButton">Purple</a>
+    <br/>
+    <span id="prediction">We predict {{prediction}} will win the match.</span>
+    <br/>
+    <span id="actual">{{winner}} actually won the match.</span>
 </div>
-<button id="startButton">Start</button>

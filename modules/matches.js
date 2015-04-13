@@ -1,44 +1,32 @@
-var https = require('https');
-var querystring = require('querystring');
-var apikey = require('../modules/apikey');
+var pg = require('pg');
 
-var parameters = {
-    beginDate: '1428007200',
-    api_key: apikey.getApiKey()
+var cachedMatches = [];
+var start = 1428892200;
+
+var retrieveMatches = function () {
+    pg.connect(process.env.DATABASE_URL, function (err, client) {
+        if (!err) {
+            var query = client.query("SELECT * FROM match_ids", null, function(err) {
+                if (err) {
+                    console.log("Could not retrieve match list");
+                    console.log(err);
+                }
+                client.end();
+            });
+            query.on('row', function(row) {
+                cachedMatches.push(row.match_id);
+            })
+        } else {
+            console.log("An error occurred connecting to the database. No matches available!");
+            console.log(err);
+        }
+    });
 };
 
-console.log(parameters.api_key);
-
-var getRecentMatchesOptions = {
-    host: 'na.api.pvp.net',
-    path: '/api/lol/na/v4.1/game/ids?' + querystring.stringify(parameters),
-    method: 'GET'
-};
-
-var cachedMatches = null;
-
-var retrieveMatches = function() {
-
-    https.request(getRecentMatchesOptions, function(res) {
-        var fullBody = "";
-        res.on("data", function(chunk) {
-            fullBody += chunk;
-        }).on("end", function() {
-            cachedMatches = JSON.parse(fullBody);
-            console.log(cachedMatches.length + " matches retrieved");
-        });
-    }).on("error", function(error) {
-        console.log("An error has occurred getting recent matches");
-        console.log(error);
-    }).end();
-};
-
-// Update our retrieved matches every 5 minutes
 retrieveMatches();
-setInterval(retrieveMatches, 5 * 60 * 1000);
 
-var getRecentMatches = function() {
+var getMatches = function () {
     return cachedMatches;
 };
 
-module.exports.getRecentMatches = getRecentMatches;
+module.exports.getMatches = getMatches;

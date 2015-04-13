@@ -3,7 +3,7 @@ var champions = require('../modules/champions');
 
 var IMAGE_BASE_URL = "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/champion/";
 
-var filterFrame = function(frame) {
+var filterFrame = function(frame, participants) {
     var result = {};
     result.timestamp = frame.timestamp;
     result.events = [];
@@ -16,6 +16,13 @@ var filterFrame = function(frame) {
                 kill.eventType = event.eventType;
                 kill.timestamp = event.timestamp;
                 kill.victimId = event.victimId;
+                kill.victimTeamId = participants[kill.victimId - 1].teamId;
+                result.events.push(kill);
+            } else if (event.eventType === "BUILDING_KILL") {
+                kill = {};
+                kill.position = event.position;
+                kill.timestamp = event.timestamp;
+                kill.teamId = event.teamId;
                 result.events.push(kill);
             }
         }
@@ -52,7 +59,7 @@ var filterMatch = function(match) {
     var myFrames = [];
     var matchFrames = match.timeline.frames;
     for (var i = 0; i < matchFrames.length; i++) {
-        myFrames[i] = filterFrame(matchFrames[i]);
+        myFrames[i] = filterFrame(matchFrames[i], match.participants);
     }
     result.timeline.frames = myFrames;
 

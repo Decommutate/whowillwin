@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS match_ids (
+    match_id integer NOT NULL,
+    PRIMARY KEY (match_id)
+)

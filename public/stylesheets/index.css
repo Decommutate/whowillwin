@@ -4,6 +4,7 @@
 
 .championlist {
     list-style-type: none;
+    float: left;
     padding: 0;
     margin: 0;
 }
@@ -18,11 +19,117 @@
     width: 100px;
 }
 
-#purpleTeam {
-    list-style-type: none;
-    float: left;;
+#guessArea {
+    display: block;
+    clear: both;
 }
 
 #map {
     float: left;
+}
+
+button {
+    width: 200px;
+    height: 50px;
+    font-size: 20px !important;
+}
+
+#blueButton {
+    -moz-box-shadow: inset 0px 1px 0px 0px #97c4fe;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #97c4fe;
+    box-shadow: inset 0px 1px 0px 0px #97c4fe;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #3d94f6), color-stop(1, #1e62d0));
+    background: -moz-linear-gradient(top, #3d94f6 5%, #1e62d0 100%);
+    background: -webkit-linear-gradient(top, #3d94f6 5%, #1e62d0 100%);
+    background: -o-linear-gradient(top, #3d94f6 5%, #1e62d0 100%);
+    background: -ms-linear-gradient(top, #3d94f6 5%, #1e62d0 100%);
+    background: linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3d94f6', endColorstr='#1e62d0', GradientType=0);
+    background-color: #3d94f6;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #337fed;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 22px 75px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #1570cd;
+}
+
+#blueButton:hover {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #1e62d0), color-stop(1, #3d94f6));
+    background: -moz-linear-gradient(top, #1e62d0 5%, #3d94f6 100%);
+    background: -webkit-linear-gradient(top, #1e62d0 5%, #3d94f6 100%);
+    background: -o-linear-gradient(top, #1e62d0 5%, #3d94f6 100%);
+    background: -ms-linear-gradient(top, #1e62d0 5%, #3d94f6 100%);
+    background: linear-gradient(to bottom, #1e62d0 5%, #3d94f6 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1e62d0', endColorstr='#3d94f6', GradientType=0);
+    background-color: #1e62d0;
+}
+
+#blueButton:active {
+    position: relative;
+    top: 1px;
+}
+
+#purpleButton {
+    margin-left: 289px;
+
+    -moz-box-shadow: inset 0px 1px 0px 0px #e184f3;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #e184f3;
+    box-shadow: inset 0px 1px 0px 0px #e184f3;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #c123de), color-stop(1, #a20dbd));
+    background: -moz-linear-gradient(top, #c123de 5%, #a20dbd 100%);
+    background: -webkit-linear-gradient(top, #c123de 5%, #a20dbd 100%);
+    background: -o-linear-gradient(top, #c123de 5%, #a20dbd 100%);
+    background: -ms-linear-gradient(top, #c123de 5%, #a20dbd 100%);
+    background: linear-gradient(to bottom, #c123de 5%, #a20dbd 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#c123de', endColorstr='#a20dbd', GradientType=0);
+    background-color: #c123de;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #a511c0;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 22px 75px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #9b14b3;
+}
+
+#purpleButton:hover {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #a20dbd), color-stop(1, #c123de));
+    background: -moz-linear-gradient(top, #a20dbd 5%, #c123de 100%);
+    background: -webkit-linear-gradient(top, #a20dbd 5%, #c123de 100%);
+    background: -o-linear-gradient(top, #a20dbd 5%, #c123de 100%);
+    background: -ms-linear-gradient(top, #a20dbd 5%, #c123de 100%);
+    background: linear-gradient(to bottom, #a20dbd 5%, #c123de 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a20dbd', endColorstr='#c123de', GradientType=0);
+    background-color: #a20dbd;
+}
+
+#purpleButton:active {
+    position: relative;
+    top: 1px;
+}
+
+#prediction {
+    display: block;
+}
+
+#actual {
+    display: block;
+}
+
+#mapArea {
+    width: 800px;
+    height: auto;
+    display: block;
 }

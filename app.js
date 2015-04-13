@@ -16,10 +16,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 hbs.registerHelper('isBlueTeam', function(teamId, block) {
+  console.log(teamId);
   return teamId === 100 ? block.fn(this) : "";
 });
 
 hbs.registerHelper('isPurpleTeam', function(teamId, block) {
+  console.log(teamId);
   return teamId === 200 ? block.fn(this) : "";
 });
 
