@@ -14,11 +14,11 @@ $(document).ready(function() {
             "Please wait a few seconds and refresh the page");
     } else {
         $("#blueButton").click(function() {
-            $("#purpleButton").animate({ opacity: 0}).unbind();
+            $("#purpleButton").addClass("greyscale").unbind();
             startMapTimer();
         });
         $("#purpleButton").click(function() {
-            $("#blueButton").animate({ opacity: 0}).unbind();
+            $("#blueButton").addClass("greyscale").unbind();
             startMapTimer();
         });
         generateMap();
