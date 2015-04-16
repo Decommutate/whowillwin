@@ -1,6 +1,9 @@
-<input type='hidden' id='timeline' value='{{{timeline}}}'/>
-
-<div id="timer"/>
+<script lang="text/javascript">
+    timeline = {{{ timeline }}};
+    matchWinner = "{{ winner }}";
+    prediction = "{{ prediction }}";
+</script>
+<div id="timer">00:00</div>
 <div id="mapArea">
     <div id="blueTeam">
         <ul class="championlist">
@@ -27,9 +30,18 @@
 <br/>
 <div id="guessArea">
     <a id="blueButton" class="blue">Blue</a>
+    <div id="predictionArea" title="We're not cheating we promise!">
+        <div id="purplePrediction" class="prediction hidden">
+            We predict purple will win
+            <!--<image class="arrow" src="images/arrow_right.png"></image>-->
+        </div>
+        <div id="bluePrediction" class="prediction hidden">
+            <!--<image class="arrow" src="images/arrow_left.png"></image>-->
+            We predict blue will win</div>
+    </div>
     <a id="purpleButton" class="purple">Purple</a>
-    <br/>
-    <span id="prediction">We predict {{prediction}} will win the match.</span>
-    <br/>
-    <span id="actual">{{winner}} actually won the match.</span>
+    <div id="outcomeContainer">
+        <span id="outcome">{{ winner }} won the match!</span>
+        <a id="playAgainButton">Play Again?</a>
+    </div>
 </div>

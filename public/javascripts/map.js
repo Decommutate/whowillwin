@@ -1,31 +1,35 @@
+var NEXUS_SIZE = 15;
 var SQAURE_SIZE = 10;
 var CIRCLE_RADIUS = 5;
-
-var svg, xScale, yScale;
-var timeline, data, currentTime = 0;
-var frameIndex = 0, eventIndex = 0;
-var killPlotInterval;
 var blueColor;
 var purpleColor;
 
+var svg, xScale, yScale;
+var data, currentTime = 0;
+var frameIndex = 0, eventIndex = 0;
+var killPlotInterval;
+
 $(document).ready(function() {
-    if ($("#timeline").val() === null) {
+    if (timeline === null) {
         $("#map").append("No map data available. " +
             "Please wait a few seconds and refresh the page");
     } else {
         $("#blueButton").click(function() {
             $("#purpleButton").addClass("greyscale").unbind();
             startMapTimer();
+            showPrediction();
+
         });
         $("#purpleButton").click(function() {
             $("#blueButton").addClass("greyscale").unbind();
             startMapTimer();
+            showPrediction();
         });
         generateMap();
-    }
 
-    blueColor = d3.rgb(0, 0, 204);
-    purpleColor = d3.rgb(75, 0, 130);
+        blueColor = d3.rgb(0, 0, 204);
+        purpleColor = d3.rgb(75, 0, 130);
+    }
 
     //$("#timer").knob({
     //    'min' : 0,
@@ -39,15 +43,15 @@ var hasStarted = false;
 function startMapTimer() {
     if (!hasStarted) {
         hasStarted = true;
-        timeline = JSON.parse($("#timeline").val());
         if (timeline !== null) {
-            killPlotInterval = setInterval(passTime, 100);
+            killPlotInterval = setInterval(passTime, 10);
         }
     }
 }
 
 function passTime() {
-    currentTime += 10000;
+    currentTime += 1000;
+    $("#timer").text(timeToString(currentTime));
 
     for (; frameIndex < timeline.frames.length; frameIndex++) {
         var frame = timeline.frames[frameIndex];
@@ -68,8 +72,18 @@ function passTime() {
         eventIndex = 0;
     }
 
-    console.log("Done plotting kills!");
+    plotNexusKill();
     clearInterval(killPlotInterval);
+
+    $("#outcome").css('visibility','visible').hide().fadeIn(1000, function() {
+        var buttonColor = matchWinner === "Blue" ? "blue" : "purple";
+        $("#playAgainButton").css('visibility','visible').hide()
+            .addClass(buttonColor).fadeIn(1000, function() {
+                $("#playAgainButton").click(function() {
+                    location.reload();
+                })
+            });
+    });
 }
 
 function generateMap() {
@@ -115,7 +129,7 @@ function plotKills(data, color, eventType) {
                     .attr('r', CIRCLE_RADIUS)
                     .attr('class', 'kills');
         } else {
-            svg.append('svg:g').selectAll('circle')
+            svg.append('svg:g').selectAll('rect')
                 .data(data)
                 .enter().append('rect')
                     .attr('x', function (d) { return xScale(d[0]) })
@@ -126,4 +140,47 @@ function plotKills(data, color, eventType) {
                     .attr('class', 'kills');
         }
     }
+}
+
+function plotNexusKill() {
+    var nexusPosition;
+    var color;
+
+    if (matchWinner === "Blue") {
+        nexusPosition = [[12980, 13590]];
+        color = purpleColor;
+    } else {
+        nexusPosition = [[1500, 1735]];
+        color = blueColor;
+    }
+
+    svg.append('svg:g').selectAll('rect')
+        .data(nexusPosition)
+        .enter().append('rect')
+        .attr('x', function (d) { return xScale(d[0]) })
+        .attr('y', function (d) { return yScale(d[1]) })
+        .attr('fill', function () { return color; })
+        .attr('width', NEXUS_SIZE)
+        .attr('height', NEXUS_SIZE)
+        .attr('class', 'kills');
+}
+
+function showPrediction() {
+    if (prediction === "Blue") {
+        $("#bluePrediction").fadeIn("500");
+    } else {
+        $("#purplePrediction").fadeIn("500");
+    }
+}
+
+function timeToString(time) {
+    var date = new Date(time);
+    return formatNumber(date.getMinutes()) + ":" + formatNumber(date.getSeconds());
+}
+
+function formatNumber(number) {
+    if (number < 10) {
+        return "0" + number;
+    }
+    return number.toString();
 }

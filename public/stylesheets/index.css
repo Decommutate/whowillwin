@@ -1,16 +1,5 @@
-header {
-    font-size: 50px;
-    text-align: center;
-    height: 50px;
-}
-
 body {
     background-image: url('../images/background.png');
-}
-
-.wrapper {
-    background-color: white;
-    padding: 20px 70px 50px 70px;
 }
 
 #blueTeam {
@@ -38,6 +27,7 @@ body {
 #guessArea {
     display: block;
     clear: both;
+    white-space: nowrap;
 }
 
 #map {
@@ -89,7 +79,6 @@ body {
 }
 
 #purpleButton {
-    margin-left: 302px;
 }
 
 .purple {
@@ -170,4 +159,57 @@ body {
     width: 800px;
     height: auto;
     display: block;
+}
+
+#predictionArea {
+    display: inline-block;
+    width: 302px;
+}
+
+.prediction {
+    display: inline-block;
+    font-size: 20px;
+}
+
+.arrow {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+}
+
+#bluePrediction {
+    padding-left: 45px;
+}
+
+#purplePrediction {
+    padding-left: 38px;
+}
+
+.hidden {
+    display: none;
+}
+
+#outcomeContainer {
+    width: 100%;
+    margin-top: 55px;
+}
+
+#outcome {
+    visibility: hidden;
+    font-size: 25px;
+}
+
+#timer {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
+#playAgainButton {
+    visibility: hidden;
+    width: auto;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-left: 30px;
 }
