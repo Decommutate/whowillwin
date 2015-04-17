@@ -43,6 +43,7 @@ Note: Git may insist that .apikey or .matches has changed despite it being in th
 .gitignore file once a developer key has been added. If it does, run the commands
 
    > git update-index --assume-unchanged .apikey
+   
    > git update-index --assume-unchanged .matches
 
 
