@@ -1,9 +1,17 @@
+/**
+ * This module gets manages the pool of matches that will eventually be drawn from
+ *
+ * @author Chris Zonca
+ */
 var pg = require('pg');
 
+// The currently cached pool of match ids
 var cachedMatches = [];
-var start = 1428892200;
 
-var retrieveMatches = function () {
+/**
+ * Gets and caches a list of known match ids from the database.
+ */
+function retrieveMatches() {
     pg.connect(process.env.DATABASE_URL, function (err, client) {
         if (!err) {
             var query = client.query("SELECT * FROM match_ids", null, function(err) {
@@ -21,10 +29,15 @@ var retrieveMatches = function () {
             console.log(err);
         }
     });
-};
+}
 
 retrieveMatches();
 
+/**
+ * Gets an array of match ids from URF games
+ *
+ * @returns {Array} The array of match ids
+ */
 var getMatches = function () {
     return cachedMatches;
 };

@@ -1,16 +1,26 @@
+/**
+ * This module focuses on getting fully information about an individual
+ * match from the Riot servers
+ *
+ * @author Chris Zonca
+ */
 var https = require('https');
 var querystring = require('querystring');
 var apikey = require('../modules/apikey');
 var matches = require('../modules/matches');
 var matchFilter = require('../modules/matchFilter');
 
-var cachedMatch = null;
+var callbacks = [];
 
-var refreshMatch = function() {
+/**
+ * Gets a random match from the list of known matches and caches
+ * information about it from the Riot servers
+ */
+function refreshMatch() {
     var matchArray = matches.getMatches();
 
-    //console.log("Getting new match");
     if (matchArray && matchArray.length > 0) {
+
         var matchId = matchArray[Math.floor(Math.random() * matchArray.length)];
 
         var parameters = {
@@ -28,12 +38,18 @@ var refreshMatch = function() {
             res.on("data", function(chunk) {
                 fullBody += chunk;
             }).on("end", function() {
+
+                var match;
                 try {
-                    cachedMatch = matchFilter.filterMatch(JSON.parse(fullBody));
+                    match = matchFilter.filterMatch(JSON.parse(fullBody));
                 }
                 catch(ex) {
                     console.log("Could not parse JSON: " + fullBody);
                     console.log(ex);
+                }
+
+                for (var i in callbacks) {
+                    callbacks[i](match);
                 }
             });
         }).on("error", function(error) {
@@ -43,14 +59,22 @@ var refreshMatch = function() {
 
         console.log("Now serving match id: " + matchId);
     } else {
-        //console.log("Could not get new match: no matches available");
+        console.log("Could not get new match: no matches available");
     }
-};
+}
 
+// Get a new match every 10 seconds to keep things fresh
 setInterval(refreshMatch, 10000);
 
-var getMatch = function() {
-    return cachedMatch;
+/**
+ * Adds a function that will be called when a new
+ * match is retrieved. The function will be passed
+ * a JSON object containing match information
+ *
+ * @returns {function} The callback to add
+ */
+var addMatchListener = function (callback) {
+    callbacks.push(callback);
 };
 
-module.exports.getMatch = getMatch;
+module.exports.addMatchListener = addMatchListener;

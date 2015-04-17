@@ -1,5 +1,5 @@
 var NEXUS_SIZE = 15;
-var SQAURE_SIZE = 10;
+var SQUARE_SIZE = 10;
 var CIRCLE_RADIUS = 5;
 var blueColor;
 var purpleColor;
@@ -8,7 +8,11 @@ var svg, xScale, yScale;
 var data, currentTime = 0;
 var frameIndex = 0, eventIndex = 0;
 var killPlotInterval;
+var hasStarted = false;
 
+/**
+ * Initializes the map and UI of the web page
+ */
 $(document).ready(function() {
     if (timeline === null) {
         $("#map").append("No map data available. " +
@@ -27,22 +31,29 @@ $(document).ready(function() {
         });
         generateMap();
 
-        blueColor = d3.rgb(0, 0, 204);
+        blueColor = d3.rgb(0, 0, 255);
         purpleColor = d3.rgb(75, 0, 130);
     }
 });
 
-var hasStarted = false;
-
+/**
+ * Starts the map timer, which will cause the match to begin playing
+ */
 function startMapTimer() {
     if (!hasStarted) {
         hasStarted = true;
         if (timeline !== null) {
+
+            // Keep track of this interval so we can stop it later
             killPlotInterval = setInterval(passTime, 10);
         }
     }
 }
 
+/**
+ * Pass a small amount of time, updating the map with the events that
+ * occurred during that time
+ */
 function passTime() {
     currentTime += 1000;
     $("#timer").text(timeToString(currentTime));
@@ -80,6 +91,9 @@ function passTime() {
     });
 }
 
+/**
+ * Initializes the map on the center of the web page
+ */
 function generateMap() {
 
     var domain = {
@@ -111,6 +125,14 @@ function generateMap() {
         .attr('height', height);
 }
 
+/**
+ * Plots a kill on the map
+ *
+ * @param data {Array} A 2 element array containing the x and y
+ *    position of the kill
+ * @param color The color to draw the kill icon
+ * @param eventType The type of kill that occurred
+ */
 function plotKills(data, color, eventType) {
     if (svg && xScale && yScale) {
         if (eventType === "CHAMPION_KILL") {
@@ -129,13 +151,16 @@ function plotKills(data, color, eventType) {
                     .attr('x', function (d) { return xScale(d[0]) })
                     .attr('y', function (d) { return yScale(d[1]) })
                     .attr('fill', function () { return color; })
-                    .attr('width', SQAURE_SIZE)
-                    .attr('height', SQAURE_SIZE)
+                    .attr('width', SQUARE_SIZE)
+                    .attr('height', SQUARE_SIZE)
                     .attr('class', 'kills');
         }
     }
 }
 
+/**
+ * Plots the nexus that was destroyed during this match
+ */
 function plotNexusKill() {
     var nexusPosition;
     var color;
@@ -159,6 +184,9 @@ function plotNexusKill() {
         .attr('class', 'kills');
 }
 
+/**
+ * Displays the prediction provided by the server
+ */
 function showPrediction() {
     if (prediction === "Blue") {
         $("#bluePrediction").fadeIn("500");
@@ -167,11 +195,24 @@ function showPrediction() {
     }
 }
 
+/**
+ * Formats the clock on the top of the map
+ *
+ * @param time {number} The number of milliseconds since the match began
+ * @returns {string} A string representation of the provided time
+ */
 function timeToString(time) {
     var date = new Date(time);
     return formatNumber(date.getMinutes()) + ":" + formatNumber(date.getSeconds());
 }
 
+/**
+ * Pads the provided 1 or 2 digit number with zeroes, if necessary,
+ * to be two characters long
+ *
+ * @param number {number} The number to format
+ * @returns {string} The formatted number
+ */
 function formatNumber(number) {
     if (number < 10) {
         return "0" + number;

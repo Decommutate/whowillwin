@@ -54,13 +54,9 @@ body {
 .wrapper {
     width: 712px;
     margin: 0 auto;
-}
-
-.wrapper {
-    background-color: white;
+    background-image: url('../images/content.png');
     padding: 20px 70px 5px 70px;
 }
-
 .header {
     font-size: 30px;
     text-align: center;
@@ -85,4 +81,8 @@ body {
 footer {
     margin-top: 100px;
     font-size: 10px;
+}
+
+h1 {
+    margin-top: 50px;
 }
