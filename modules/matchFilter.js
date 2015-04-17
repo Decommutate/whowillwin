@@ -35,6 +35,8 @@ var filterParticipant = function(participant) {
 
     result.teamId = participant.teamId;
     result.championId = participant.championId;
+    result.tierImage = getImageForTier(participant.highestAchievedSeasonTier);
+    result.tierName = formatTier(participant.highestAchievedSeasonTier);
 
     var champion = champions.getChampions()[participant.championId];
     result.championName = champion.name;
@@ -42,6 +44,14 @@ var filterParticipant = function(participant) {
 
     return result;
 };
+
+function formatTier(tier) {
+    return tier.charAt(0) + tier.slice(1).toLowerCase();
+}
+
+function getImageForTier(tier) {
+    return tier.toLowerCase() + ".png";
+}
 
 var filterTeam = function(team) {
     var result = {};

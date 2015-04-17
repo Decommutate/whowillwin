@@ -19,9 +19,37 @@ body {
     margin: 0;
 }
 
+.imageDiv {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    width: 100px;
+    height: 103px;
+}
+
 .championImage {
+    position: absolute;
     height: 100px;
     width: 100px;
+    left: 0px;
+    top: 0px;
+    z-index: 0;
+}
+
+.tierImage {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 0px;
+    z-index: 0;
+}
+
+.leftTierImage {
+    left: -40px;
+}
+
+.rightTierImage {
+    left: 100px;
 }
 
 #guessArea {

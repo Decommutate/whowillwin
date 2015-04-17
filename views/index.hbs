@@ -9,8 +9,13 @@
         <ul class="championlist">
             {{#participants}}
                 {{#isBlueTeam teamId}}
-                    <li><img class="championImage" src="{{championImage}}"
-                             title="{{championName}}"/></li>
+                    <li>
+                        <div class="imageDiv">
+                            <img class="championImage" src="{{championImage}}"
+                                 title="{{championName}}"/>
+                            <img class="tierImage leftTierImage" src="images/{{tierImage}}" title="{{tierName}}">
+                        </div>
+                    </li>
                 {{/isBlueTeam}}
             {{/participants}}
         </ul>
@@ -20,8 +25,13 @@
         <ul class="championlist">
             {{#participants}}
                 {{#isPurpleTeam teamId}}
-                    <li><img class="championImage" src="{{championImage}}"
-                             title="{{championName}}"/></li>
+                    <li>
+                        <div class="imageDiv">
+                            <img class="championImage" src="{{championImage}}"
+                                 title="{{championName}}"/>
+                            <img class="tierImage rightTierImage" src="images/{{tierImage}}" title="{{tierName}}">
+                        </div>
+                    </li>
                 {{/isPurpleTeam}}
             {{/participants}}
         </ul>
