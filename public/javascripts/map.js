@@ -73,7 +73,9 @@ function passTime() {
         var buttonColor = matchWinner === "Blue" ? "blue" : "purple";
         $("#playAgainButton").css('visibility','visible').hide()
             .addClass(buttonColor).fadeIn(1000, function() {
-                $("#playAgainButton").click(function() {})
+                $("#playAgainButton").click(function() {
+                    location.reload();
+                })
             });
     });
 }
