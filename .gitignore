@@ -28,3 +28,6 @@ node_modules
 
 #Ignore updates to .apikey to developers can insert their dev key
 .apikey
+
+#Likewise, ignore updates to .matches to help prevent any mistakes
+.matches
