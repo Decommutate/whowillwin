@@ -30,12 +30,6 @@ $(document).ready(function() {
         blueColor = d3.rgb(0, 0, 204);
         purpleColor = d3.rgb(75, 0, 130);
     }
-
-    //$("#timer").knob({
-    //    'min' : 0,
-    //    'max' : 123
-    //
-    //})
 });
 
 var hasStarted = false;
@@ -79,9 +73,7 @@ function passTime() {
         var buttonColor = matchWinner === "Blue" ? "blue" : "purple";
         $("#playAgainButton").css('visibility','visible').hide()
             .addClass(buttonColor).fadeIn(1000, function() {
-                $("#playAgainButton").click(function() {
-                    location.reload();
-                })
+                $("#playAgainButton").click(function() {})
             });
     });
 }
