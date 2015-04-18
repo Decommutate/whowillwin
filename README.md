@@ -54,7 +54,7 @@ About the AI
 
 The default AI currently generated is...well...decently accurate, standing at
 ~56.5% of correct guessing the outcome of a match. The learning algorithm used
-is called a State Vector Maching (SVM). This [guide](http://www.csie.ntu.edu.tw/~cjlin/papers/guide/guide.pdf)
+is called a Support Vector Maching (SVM). This [guide](http://www.csie.ntu.edu.tw/~cjlin/papers/guide/guide.pdf)
 was very helpful in learning, at a high level, how to go about training an
 SVM on a dataset.
 
