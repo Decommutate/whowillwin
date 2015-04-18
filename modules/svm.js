@@ -1,5 +1,5 @@
 /**
- * This class focuses on the State Vector Machine (SVM) that will be used
+ * This class focuses on the Support Vector Machine (SVM) that will be used
  * to generate predictions. It will both load up the SVM model and
  * make predictions.
  *
